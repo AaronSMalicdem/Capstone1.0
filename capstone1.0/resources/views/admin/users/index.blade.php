@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
 <style>
     .container {
         margin-top: 50px;
@@ -36,7 +38,13 @@
     }
 </style>
 
+<div class="mb-4">
+                <a href="{{ url('admin/dashboard') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> <!-- Font Awesome icon -->
+                </a>
+            </div>
 <div class="container">
+
     <h1 class="text-center mb-4">Manage Users</h1>
     
     <div class="mb-4">

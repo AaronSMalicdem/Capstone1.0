@@ -1,8 +1,15 @@
-@extends('layouts.app') <!-- Change this to your actual layout path -->
+@extends('layouts.app')
 
-@section('title', 'Expenses Report') <!-- Set the title of the page -->
+@section('title', 'Expenses Report') 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-@section('content') <!-- Start of the content section -->
+@section('content') 
+<div class="mb-4">
+                <a href="{{ url('admin/dashboard') }}" class="btn btn-outline-primary">
+                    <i class="fas fa-arrow-left"></i> 
+                </a>
+            </div>
+<div class="container">
     <div class="card">
         <h1>Expenses Report</h1>
 
@@ -24,21 +31,7 @@
         <canvas id="expensesChart" style="max-width: 100%; height: 400px;"></canvas>
     </div>
 
-    <div class="card mt-4">
-        <h2>Customer Feedback</h2>
-        <ul>
-            @if(isset($comments) && count($comments) > 0)
-                @foreach($comments as $comment)
-                    <li>
-                        <strong>{{ $comment[0] ?? 'Anonymous' }}</strong>: {{ $comment[1] ?? 'No comment provided' }} ({{ $comment[2] ?? 'N/A' }})
-                    </li>
-                @endforeach
-            @else
-                <li>No comments available.</li>
-            @endif
-        </ul>
-    </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Check if the expenses data is being passed
@@ -88,5 +81,21 @@
             console.log('No expenses data found.');
         }
     </script>
+
+<div class="card mt-4">
+        <h2>Customer Feedback</h2>
+        <ul>
+            @if(isset($comments) && count($comments) > 0)
+                @foreach($comments as $comment)
+                    <li>
+                        <strong>{{ $comment[0] ?? 'Anonymous' }}</strong>: {{ $comment[1] ?? 'No comment provided' }} ({{ $comment[2] ?? 'N/A' }})
+                    </li>
+                @endforeach
+            @else
+                <li>No comments available.</li>
+            @endif
+        </ul>
+    </div>
+
 
 @endsection <!-- End of the content section -->

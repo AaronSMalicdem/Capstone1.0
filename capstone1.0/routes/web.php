@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\ExpensesReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,3 +59,4 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy')->middleware('role:admin');
 
 });
+Route::match(['get', 'post'], '/expenses-report', [ExpensesReportController::class, 'index'])->name('expenses-report');

@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon; // Import Carbon for date manipulation
-
+use Google_Client;
+use Google_Service_Sheets;
 
 class ExpensesReportController extends Controller
 {
+    protected $googleSheetsService;
+
+    public function __construct()
+    {
+        $this->googleSheetsService = new GoogleSheetsService();
+    }
 
     public function index(Request $request)
     {
@@ -47,5 +54,28 @@ class ExpensesReportController extends Controller
 
         // Return the view with expenses and comments data
         return view('expenses-report', compact('expenses', 'comments'));
+    }
+}
+
+class GoogleSheetsService
+{
+    private $client;
+    private $service;
+    private $spreadsheetId = '1oVN6T0bAEuMD_ISC4PILA41a54N30dmqxWW9gV9VWN8'; // Replace with your Spreadsheet ID
+
+    public function __construct()
+    {
+        $this->client = new Google_Client();
+        $this->client->setAuthConfig(storage_path('app/google-sheets-credentials.json'));
+        $this->client->addScope(Google_Service_Sheets::SPREADSHEETS_READONLY);
+        $this->service = new Google_Service_Sheets($this->client);
+        $this->spreadsheetId = '1oVN6T0bAEuMD_ISC4PILA41a54N30dmqxWW9gV9VWN8'; // Replace with your actual spreadsheet ID
+    }
+
+    public function getComments()
+    {
+        $range = 'Kuwago!A2:C'; // Adjust the range according to your sheet structure
+        $response = $this->service->spreadsheets_values->get($this->spreadsheetId, $range);
+        return $response->getValues();
     }
 }
